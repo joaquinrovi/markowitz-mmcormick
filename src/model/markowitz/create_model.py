@@ -52,11 +52,17 @@ def create_optimization_model(assets_data, return_level, risk_level, covariance_
     model.risk_level = Param(initialize=risk_level)
     model.expected_return = Param(model.assets, initialize=assets_data['Mean (average) ROI'].to_dict())
     # Initialize the covariance parameter using asset names as indices
-    model.covariance = Param(model.assets, model.assets, initialize={
-        (asset1, asset2): covariance_matrix.loc[asset1, asset2]
-        for asset1 in model.assets
-        for asset2 in model.assets
-    }, mutable=True)
+    # Initialize the covariance_dict
+    covariance_dict = {}
+    for asset1 in model.assets:
+        covariance_dict[asset1] = {}
+        for asset2 in model.assets:
+            asset1_name = asset1
+            asset2_name = asset2
+            covariance_dict[asset1][asset2] = covariance_matrix.loc[asset1_name, asset2_name]
+
+    # Initialize the covariance parameter using covariance_dict
+    model.covariance = Param(model.assets, model.assets, initialize=covariance_dict, mutable=True)
 
     # Decision variables
     model.w = Var(model.assets, domain=NonNegativeReals, bounds=(0, 1))
