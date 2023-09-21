@@ -4,17 +4,18 @@ from pyomo.environ import *
 
 # Step 1: Preprocess data
 file_path = 'C:/Users/j.rodriguez.villegas/Documents/optimization/01_data/configuration_file.xlsx'
-sheet_name = 'Historical_data_2'
+sheet_name = 'Historical_data'
 df = read_data(file_path, sheet_name)
 pivot_table = pivot_data(df, "Date", "Asset", "ROI")
 covariance_matrix = calculate_covariance_matrix(pivot_table)
 correlation_matrix = calculate_correlation_matrix(pivot_table)
-assets_data = calculate_expected_returns(df)
+expected_return_data = calculate_expected_returns(df)
 
 # Step 2: Create the optimization model
 return_level = 0.001
 risk_level = 0.0001
-model = create_optimization_model(assets_data, return_level, risk_level, covariance_matrix)
+model = create_optimization_model(expected_return_data, return_level, risk_level, covariance_matrix)
+
 
 solver = SolverFactory('glpk')
 

@@ -2,7 +2,7 @@
 """
 preprocess_data.py
 ====================================
-Functions to read, process and clean data.
+Functions for reading, processing, and cleaning data.
 
 @author:
      - j.rodriguez.villegas

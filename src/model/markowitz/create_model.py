@@ -2,7 +2,7 @@
 """
 create_model.py
 ====================================
-Framework of the mathematical model.
+Defines the mathematical model for portfolio optimization using Pyomo.
 
 @author:
      - j.rodriguez.villegas
@@ -12,14 +12,14 @@ from pyomo.environ import *
 from src.model.markowitz.constraints import add_constraints, add_objective
 
 
-def create_optimization_model(assets_data, return_level, risk_level, covariance_matrix):
+def create_optimization_model(expected_returns, return_level, risk_level, covariance_matrix):
     """
     Creates the Markowitz-McCormick portfolio optimization problem.
 
     Parameters
     ----------
-    assets_data : DataFrame
-        DataFrame containing asset data, including the Mean (average) ROI.
+    expected_returns : DataFrame
+        DataFrame containing asset expected returns.
     return_level : float
         The desired level of portfolio return.
     risk_level : float
@@ -45,25 +45,20 @@ def create_optimization_model(assets_data, return_level, risk_level, covariance_
     model = ConcreteModel('markowitz')
 
     # Sets
-    model.assets = Set(initialize=assets_data.index)
+    model.assets = Set(initialize=expected_returns.index)
 
     # Parameters
     model.return_level = Param(initialize=return_level)
     model.risk_level = Param(initialize=risk_level)
-    model.expected_return = Param(model.assets, initialize=assets_data['Mean (average) ROI'].to_dict())
-    # Initialize the covariance parameter using asset names as indices
-    # Initialize the covariance_dict
-    covariance_dict = {}
-    for asset1 in model.assets:
-        covariance_dict[asset1] = {}
-        for asset2 in model.assets:
-            asset1_name = asset1
-            asset2_name = asset2
-            covariance_dict[asset1][asset2] = covariance_matrix.loc[asset1_name, asset2_name]
 
-    # Initialize the covariance parameter using covariance_dict
+    # Use expected returns from the provided DataFrame
+    model.expected_return = Param(model.assets, initialize=expected_returns.to_dict()["Mean (average) ROI"])
+    
+    # Use the provided covariance matrix
+    covariance_dict = {(i, j): covariance_matrix.at[i, j] for i in model.assets for j in model.assets}
     model.covariance = Param(model.assets, model.assets, initialize=covariance_dict, mutable=True)
-
+    
+    
     # Decision variables
     model.w = Var(model.assets, domain=NonNegativeReals, bounds=(0, 1))
     model.u = Var(model.assets, model.assets, domain=NonNegativeReals)

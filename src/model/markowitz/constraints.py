@@ -2,7 +2,7 @@
 """
 create_model.py
 ====================================
-Constraints and objective of the mathematical model.
+Functions for adding constraints and objectives to the optimization model.
 
 @author:
      - j.rodriguez.villegas
