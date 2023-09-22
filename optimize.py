@@ -18,7 +18,7 @@ from src.model.markowitz.objective import *
 if __name__ == "__main__":
     # Specify the path to the configuration file
     file_path = 'C:/Users/j.rodriguez.villegas/Documents/optimization/01_data/configuration_file.xlsx'
-    sheet_name = 'Historical_data' # Change the sheet
+    sheet_name = 'Historical_data_2' # Change the sheet
     
     # Load data and create the optimization model
     df = read_data(file_path, sheet_name)
