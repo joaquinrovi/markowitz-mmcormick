@@ -83,7 +83,7 @@ def c_3_2_linearized_risk(model, i, j):
     Parameters
     ----------
 
-    model : Pyomo ConcreteMode
+    model : Pyomo ConcreteModel
         The optimization model.
     i : string
         The assets.
@@ -108,7 +108,7 @@ def c_3_3_linearized_risk(model, i, j):
     Parameters
     ----------
 
-    model : Pyomo ConcreteMode
+    model : Pyomo ConcreteModel
         The optimization model.
     i : string
         The assets.
@@ -133,7 +133,7 @@ def c_3_4_linearized_risk(model, i, j):
     Parameters
     ----------
 
-    model : Pyomo ConcreteMode
+    model : Pyomo ConcreteModel
         The optimization model.
     i : string
         The assets.
@@ -159,7 +159,7 @@ def c_3_5_linearized_risk(model, i, j):
     Parameters
     ----------
 
-    model : Pyomo ConcreteMode
+    model : Pyomo ConcreteModel
         The optimization model.
     i : string
         The assets.
@@ -185,7 +185,7 @@ def c_4_non_negative(model, i):
     Parameters
     ----------
 
-    model : Pyomo ConcreteMode
+    model : Pyomo ConcreteModel
         The optimization model.
     i : string
         The assets.
