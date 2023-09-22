@@ -12,7 +12,7 @@ from pyomo.environ import *
 
 def create_objective(model):
     model.obj_calculate_total_return = Objective(sense=maximize, rule=calculate_total_return)
-    # model.obj_calculate_total_riskn = Objective(sense=minimize, rule=calculate_total_risk)
+    # model.obj_calculate_total_risk = Objective(sense=minimize, rule=calculate_total_risk)
 
 
 def calculate_total_return(model):
